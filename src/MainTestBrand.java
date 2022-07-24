@@ -1,20 +1,17 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainTestBrand {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  throws InterruptedException{
         BrandList list = new BrandList();
         Scanner sc = new Scanner(System.in);
-        list.loadFromFile("C:\\Users\\ASUS\\OneDrive\\Documents\\NetBeansProjects\\New Folder\\Assignment-PRO192\\PRO192_ASSIGNMENT_DEAD_TEAM\\brands.txt");
-        int choice;
-        do {
-            System.out.println("1. List all brands");
-            System.out.println("2. Add a new brand");
-            System.out.println("3. Search a brand based on its ID");
-            System.out.println("4. Update a brand");
-            System.out.println("5. Save Brand to file");
-            System.out.println("6. Exit");
-            System.out.print("input your choice: ");
-            choice = sc.nextInt();
+        String[] ops = {"List all brands", "Add a new brand", "Search a brand based on its ID",
+                        "Update a brand", "Save brands to the file, named brands.txt", 
+                        "List all cars in ascending order of brand names", "List cars based on a part of an input brand name",
+                        "Add a car", "Remove a car based on its ID", "Update a car based on its ID", "Save cars to file, named cars.txt"};
+        int choice = 0;
+        do{
+            choice = Menu.getChoice(ops);
             switch (choice) {
                 case 1:
                     list.listBrands();
@@ -29,9 +26,28 @@ public class MainTestBrand {
                     list.updateBrand();
                     break;
                 case 5:
-                    list.saveToFile("C:\\Users\\ASUS\\OneDrive\\Documents\\NetBeansProjects\\New Folder\\Assignment-PRO192\\PRO192_ASSIGNMENT_DEAD_TEAM\\brands.txt");          
+                    
+                    break;
+                case 6:
+                    
+                    break;
+                case 7:
+                    
+                    break;
+                case 8:
+                    
+                    break;
+                case 9:
+                    
+                    break;
+                case 10:
+                    
+                    break;
+                case 11:
+                    
+                    break;  
             }
-        } while (choice <= 5);
+        } while (choice >0  && choice <= 11);
     }
     
 }
