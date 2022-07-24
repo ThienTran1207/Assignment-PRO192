@@ -78,12 +78,12 @@ public class Inputter {
         }while(!data.matches(pattern));
         return data;
     }
-    //Pthanh
+    
+    
     public static String inputFramdID(String msg, ArrayList<Car> t){
         String Result ="";
         boolean isDuplicate = true;
         do{
-            System.out.println(msg);
             Result = inputPattern(msg, "[fF][\\d]{5}");
             isDuplicate = Inputter.checkIDDuplicate(Result, t);
         }while(Result.length() != 6  || isDuplicate == true);
@@ -103,7 +103,6 @@ public class Inputter {
         String Result ="";
         boolean isDuplicate = true;
         do{
-            System.out.println(msg);
             Result = inputPattern(msg, "[Ee][\\d]{5}");
             isDuplicate = Inputter.checkIDDuplicate(Result, t);
         }while(Result.length() != 6  || isDuplicate == true);
@@ -113,7 +112,6 @@ public class Inputter {
     public static String inputFrameID(String msg){
         String Result ="";
         do{
-            System.out.println(msg);
             Result = inputPattern(msg, "[fF][\\d]{5}");  
         }while(Result.length() != 6 );
         return Result;
@@ -121,7 +119,6 @@ public class Inputter {
     public static String inputEngineID(String msg){
         String Result ="";
         do{
-            System.out.println(msg);
             Result = inputPattern(msg, "[Ee][\\d]{5}");
         }while(Result.length() != 6);
         return Result;
