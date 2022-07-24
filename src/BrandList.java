@@ -82,7 +82,8 @@ public class BrandList extends ArrayList<Brand> {
     }
 
     public Brand getUserChoice() {
-        return null;
+        Menu mnu = new Menu();
+        return (Brand)mnu.ref_getChoice(this);
 
     }
 
