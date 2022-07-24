@@ -67,18 +67,18 @@ public class BrandList extends ArrayList<Brand> {
 
     }
 
-    public void searchID() {
-        if (this.isEmpty()) {
-            System.out.println("Empty list. Cannot search any brand");
-        } else {
-            String sID = Inputter.inputString("Input brand id to search:");
-            Brand br = this.search(sID);//search brand base on code
-            if (br == null) {
-                System.out.println("Brand " + sID + " doesn't exist.");
-            } else {
-                System.out.println("Found: " + br);
+    public int searchID(String brandID){
+        {
+        brandID = brandID.trim().toUpperCase();
+        int index = -1;
+        int n = this.size();
+        for (int i = 0; i < n; i++) {
+            if(this.get(i).getBrandID().compareToIgnoreCase(brandID) == 0){
+                index = i;
             }
         }
+        return index;
+    }
     }
 
     public Brand getUserChoice() {
