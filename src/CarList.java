@@ -27,7 +27,7 @@ public class CarList extends ArrayList<Car> {
                     String[] ls = line.split(",");
                     Car br = new Car();
                     br.setCarID(ls[0]);
-                    br.getBrand().getBrandID();
+                    br.getBrand().setBrandID(ls[1].substring(1));
                     br.setColor(ls[2].substring(1));
                     br.setFrameID(ls[3].substring(1));
                     this.add(br);
