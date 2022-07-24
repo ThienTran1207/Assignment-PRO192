@@ -11,7 +11,7 @@ public class MainTestBrand {
                         "Add a car", "Remove a car based on its ID", "Update a car based on its ID", "Save cars to file, named cars.txt"};
         int choice = 0;
         do{
-            choice = Menu.getChoice(ops);
+            choice = 1;
             switch (choice) {
                 case 1:
                     list.listBrands();
@@ -20,7 +20,7 @@ public class MainTestBrand {
                     list.addBrand();
                     break;
                 case 3:
-                    list.searchID();
+                    //list.searchID();
                     break;
                 case 4:
                     list.updateBrand();
