@@ -4,7 +4,7 @@ public class CarList extends ArrayList<Car>{
     public CarList(BrandList bList){
         this.blist = bList;
     }
-    
+    // use for isCodeDupplicated()
     public Car search(String ID) {
         ID = ID.trim().toUpperCase();
         for (int i = 0; i < this.size(); i++) {
@@ -13,15 +13,6 @@ public class CarList extends ArrayList<Car>{
             }
         }
         return null; // not found
-    }
-    public Car searchBrandID(String ID, Brand brand){
-        ID = ID.trim().toUpperCase();
-        for (int i = 0; i < this.size(); i++) {
-            if(brand.getBrandID().equals(ID)){
-                return this.get(i);
-            }
-        }
-        return null;
     }
     private boolean isCodeDupplicated(String code) {
         code = code.trim().toUpperCase();
@@ -108,6 +99,7 @@ public class CarList extends ArrayList<Car>{
         }
         return true;
     }
+    // use for updateCar();
     public int searchID(String carID){
         carID = carID.trim().toUpperCase();
         int index = -1;
