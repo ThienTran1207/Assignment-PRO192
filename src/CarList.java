@@ -22,7 +22,7 @@ public class CarList extends ArrayList<Car>{
         boolean check = false;
         code = code.trim().toUpperCase();
         for (int i = 0; i < t.size(); i++) {
-            if(t.get(i).brandID.compareTo(code) == 0){
+            if(t.get(i).getBrandID().compareToIgnoreCase(code) == 0){
                 check = true;
                 break;
             }
@@ -49,14 +49,15 @@ public class CarList extends ArrayList<Car>{
             isDuplicate = isCodeDupplicated(newId);
             brandID = Inputter.inputString("Enter Brand Id: ");
             brandID = brandID.toUpperCase();
-            isExistBrandID(brandID, this.blist);
-            brandIndex = BrandIndex(brandID, blist);
+            isExist = isExistBrandID(brandID, this.blist);
+            brandIndex = BrandIndex(brandID, this.blist);
             if(isDuplicate){
                 System.out.println("Car ID is dupplicate");
             }
-            else if(!isExist){
+            else if(isExist == false){
                 System.out.println("Brand ID is not exist");
             }
+            
         } while(isExist == false || isDuplicate == true);
         brand = this.blist.get(brandIndex);
         newColor = Inputter.inputNonNlankStr("Enter Car color: ");
@@ -90,12 +91,13 @@ public class CarList extends ArrayList<Car>{
             return false;
         }
         else{
-            //Brand b = menu.ref_getChoice(this.bList);
-            Brand b = new Brand();
+            Menu mn = new Menu();
+            Brand b = (Brand)mn.ref_getChoice(this.blist);
             String updateColor = Inputter.inputNonNlankStr("Enter the new Color for car:");
             String updateFrameID = Inputter.inputFrameID("Enter the new Frame ID for car:");
             String updateEngineID = Inputter.inputEngineID("Enter the new Engine ID for car:");
             this.set(pos, new Car(updateID, b, updateColor, updateID, updateID));
+            System.out.println("The car with ID: " + updateID + " has been updated!" );
         }
         return true;
     }
@@ -109,6 +111,6 @@ public class CarList extends ArrayList<Car>{
                 index = i;
             }
         }
-        return index; 
+        return index;
     }
 }
