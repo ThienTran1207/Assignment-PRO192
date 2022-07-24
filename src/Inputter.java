@@ -1,7 +1,6 @@
-
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Inputter {
 
@@ -78,5 +77,53 @@ public class Inputter {
             data = sc.nextLine().trim();
         }while(!data.matches(pattern));
         return data;
+    }
+    //Pthanh
+    public static String inputFramdID(String msg, ArrayList<Car> t){
+        String Result ="";
+        boolean isDuplicate = true;
+        do{
+            System.out.println(msg);
+            Result = inputPattern(msg, "[fF][\\d]{5}");
+            isDuplicate = Inputter.checkIDDuplicate(Result, t);
+        }while(Result.length() != 6  || isDuplicate == true);
+        return Result;
+    }
+    private static boolean checkIDDuplicate(String id,ArrayList<Car> t){
+        boolean check = false;
+        for (int i = 0; i < t.size(); i++) {
+            if(t.get(i).getFrameID().equals(id)){
+                check = true;
+                break;
+            }
+        }
+        return check;
+    }
+    public static String inputEngineID(String msg, ArrayList<Car> t){
+        String Result ="";
+        boolean isDuplicate = true;
+        do{
+            System.out.println(msg);
+            Result = inputPattern(msg, "[Ee][\\d]{5}");
+            isDuplicate = Inputter.checkIDDuplicate(Result, t);
+        }while(Result.length() != 6  || isDuplicate == true);
+        return Result;
+    }
+    //for update Car...
+    public static String inputFrameID(String msg){
+        String Result ="";
+        do{
+            System.out.println(msg);
+            Result = inputPattern(msg, "[fF][\\d]{5}");  
+        }while(Result.length() != 6 );
+        return Result;
+    }
+    public static String inputEngineID(String msg){
+        String Result ="";
+        do{
+            System.out.println(msg);
+            Result = inputPattern(msg, "[Ee][\\d]{5}");
+        }while(Result.length() != 6);
+        return Result;
     }
 }
