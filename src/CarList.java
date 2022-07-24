@@ -158,8 +158,9 @@ public class CarList extends ArrayList<Car> {
             System.out.println("Not found!");
             return false;
         } else {
-            //Brand b = menu.ref_getChoice(this.bList);
-            Brand b = new Brand();
+            Menu mn = new Menu();
+            Brand b = (Brand)mn.ref_getChoice(this.blist);
+            //Brand b = new Brand();
             String updateColor = Inputter.inputNonNlankStr("Enter the new Color for car:");
             String updateFrameID = Inputter.inputFrameID("Enter the new Frame ID for car:");
             String updateEngineID = Inputter.inputEngineID("Enter the new Engine ID for car:");
