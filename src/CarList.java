@@ -1,9 +1,76 @@
-import java.util.ArrayList;
-public class CarList extends ArrayList<Car>{
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+public class CarList extends ArrayList<Car> {
+
     public BrandList blist;
-    public CarList(BrandList bList){
+
+    public CarList(BrandList bList) {
         this.blist = bList;
     }
+
+    public boolean loadFromFile(String filename) {
+        try {
+            File f = new File("File_cars.txt");
+            if (!f.exists()) {
+                System.err.println("Error: file doesnt exist");
+                return false;
+            } else {
+                //System.out.println("Load from file success!");
+
+                FileReader fd = new FileReader(f);
+                BufferedReader bf = new BufferedReader(fd);
+                String line;
+
+                while ((line = bf.readLine()) != null) {
+                    String[] ls = line.split(",");
+                    Car cr = new Car();
+                    int pos = blist.searchID(ls[1].substring(1));
+                    Brand b = blist.get(pos);
+                    cr.setBrand(b);
+                    cr.setCarID(ls[0]);
+                    cr.setColor(ls[2].substring(1));
+                    cr.setFrameID(ls[3].substring(1));
+                    cr.setEngineID(ls[4].substring(1));
+                    this.add(cr);
+                    //System.out.println(line);
+                }
+                fd.close();
+
+            }
+            return true;
+        } catch (Exception e) {
+            System.err.println("error: " + e.getMessage());
+            return false;
+        }
+
+    }
+
+    public boolean saveToFile(String filename) {
+        try {
+            File f = new File(filename);
+            if (!f.exists()) {
+                System.err.println(f.getCanonicalFile() + " does not exists to write");
+                return false;
+            }
+            FileWriter fw = new FileWriter(f,false);
+            for (int i = 0; i < this.size(); i++) {
+                Car p = this.get(i);
+                fw.write(p.toString() + "\n");
+            }
+            System.out.println("succeed!");
+            fw.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error: cannot write data to file " + filename);
+            System.err.println("Reason: " + e.getMessage());
+            return false;
+        }
+
+    }
+
     // use for isCodeDupplicated()
     public Car search(String ID) {
         ID = ID.trim().toUpperCase();
@@ -14,51 +81,54 @@ public class CarList extends ArrayList<Car>{
         }
         return null; // not found
     }
+
     private boolean isCodeDupplicated(String code) {
         code = code.trim().toUpperCase();
         return search(code) != null;
     }
-    private boolean isExistBrandID(String code, BrandList t){
+
+    private boolean isExistBrandID(String code, BrandList t) {
         boolean check = false;
         code = code.trim().toUpperCase();
         for (int i = 0; i < t.size(); i++) {
-            if(t.get(i).getBrandID().compareToIgnoreCase(code) == 0){
+            if (t.get(i).brandID.compareTo(code) == 0) {
                 check = true;
                 break;
             }
         }
         return check;
     }
-    private int BrandIndex(String code, BrandList t){
+
+    private int BrandIndex(String code, BrandList t) {
         int result = 0;
         for (int i = 0; i < t.size(); i++) {
-            if(t.get(i).getBrandID().compareTo(code) == 0){
+            if (t.get(i).getBrandID().compareTo(code) == 0) {
                 result = i;
             }
         }
         return result;
     }
-    public void addCar(){
+
+    public void addCar() {
+        Menu mn = new Menu();
         String newId, brandID, newColor, newFrameID, newEngineID = null;
-        Brand brand;
         int brandIndex = 0;
         boolean isExist = false, isDuplicate = true;
-        do{
+        do {
             newId = Inputter.inputString("Enter Car Id: ");
             newId = newId.trim().toUpperCase();
             isDuplicate = isCodeDupplicated(newId);
             brandID = Inputter.inputString("Enter Brand Id: ");
             brandID = brandID.toUpperCase();
-            isExist = isExistBrandID(brandID, this.blist);
-            brandIndex = BrandIndex(brandID, this.blist);
-            if(isDuplicate){
+            isExist =  isExistBrandID(brandID, this.blist);
+            brandIndex = BrandIndex(brandID, blist);
+            if (isDuplicate) {
                 System.out.println("Car ID is dupplicate");
-            }
-            else if(isExist == false){
+            } else if (!isExist) {
                 System.out.println("Brand ID is not exist");
             }
-            
-        } while(isExist == false || isDuplicate == true);
+        } while (isExist == false || isDuplicate == true);
+        Brand brand;
         brand = this.blist.get(brandIndex);
         newColor = Inputter.inputNonNlankStr("Enter Car color: ");
         newColor = newColor.trim().toUpperCase();
@@ -70,47 +140,90 @@ public class CarList extends ArrayList<Car>{
         this.add(temp);
         System.out.println("Car " + newId + " has been added.");
     }
-    public boolean removeCar(){
+
+    public boolean removeCar() {
         String removedID = Inputter.inputString("Enter the car's ID want to remove: ");
         int pos = searchID(removedID);
-        if(pos < 0){
+        if (pos < 0) {
             System.out.println("Not found!");
             return false;
-        }
-        else {
+        } else {
             this.remove(pos);
             System.out.println("The car with ID: " + removedID + " has been removed");
             return true;
         }
     }
-    public boolean updateCar(){
+
+    public boolean updateCar() {
         String updateID = Inputter.inputString("Enter the car's ID want to update: ");
         int pos = searchID(updateID);
-        if(pos < 0){
+        if (pos < 0) {
             System.out.println("Not found!");
             return false;
-        }
-        else{
+        } else {
             Menu mn = new Menu();
             Brand b = (Brand)mn.ref_getChoice(this.blist);
             String updateColor = Inputter.inputNonNlankStr("Enter the new Color for car:");
             String updateFrameID = Inputter.inputFrameID("Enter the new Frame ID for car:");
             String updateEngineID = Inputter.inputEngineID("Enter the new Engine ID for car:");
-            this.set(pos, new Car(updateID, b, updateColor, updateID, updateID));
-            System.out.println("The car with ID: " + updateID + " has been updated!" );
+            this.set(pos, new Car(updateID, b, updateColor, updateFrameID, updateEngineID));
         }
         return true;
     }
+
     // use for updateCar();
-    public int searchID(String carID){
+    public int searchID(String carID) {
         carID = carID.trim().toUpperCase();
         int index = -1;
         int n = this.size();
         for (int i = 0; i < n; i++) {
-            if(this.get(i).getCarID().compareToIgnoreCase(carID) == 0){
+            if (this.get(i).getCarID().compareToIgnoreCase(carID) == 0) {
                 index = i;
             }
         }
         return index;
+    }
+
+    public void printBasedBrandName(String code) {
+        code = code.trim();
+        for (int i = 0; i < this.size(); i++) {
+            if (this.get(i).getBrand().brandID.contains(code)) {
+                System.out.println(this.get(i).toString());
+            }
+        }
+    }
+
+    public void sortde() {
+        Collections.sort(blist, new Comparator<Brand>() {
+            @Override
+            public int compare(Brand o1, Brand o2) {
+                if (o1.getBrandName().equals(o2.getBrandName())) {
+                    return 0;
+                } else if (o1.getBrandName().charAt(0) < o2.getBrandName().charAt(0)) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+
+        });
+    }
+    
+    public String screenString(){
+        Car c = new Car();
+        return "<" + c.brand +"\n" + c.getCarID() +", " +c.getColor() +", " + c.getFrameID() + ", " + c.getEngineID();
+    }
+    public void listCars() {
+        sortde();
+        int N = this.size();
+        for (int i = 0; i < N; i++) {
+            Car c = this.get(i);
+            System.out.println(this.get(i));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "CarList{" + "blist=" + blist + '}';
     }
 }
