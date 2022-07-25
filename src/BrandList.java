@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 import java.lang.*;
@@ -15,12 +16,12 @@ public class BrandList extends ArrayList<Brand> {
                 System.err.println("Error: file doesnt exist");
                 return false;
             } else {
-                System.out.println("Load from file success!");
-                
+                //System.out.println("Load from file success!");
+
                 FileReader fd = new FileReader(f);
                 BufferedReader bf = new BufferedReader(fd);
                 String line;
-                while ((line = bf.readLine())!= null) {
+                while ((line = bf.readLine()) != null) {
                     String[] ls = line.split(",|:");
                     Brand br = new Brand();
                     br.setBrandID(ls[0]);
@@ -66,23 +67,31 @@ public class BrandList extends ArrayList<Brand> {
 
     }
 
-    public int searchID(String brandID){
-        {
+    public int searchID(String brandID) {
+//        if (this.isEmpty()) {
+//            System.out.println("Empty list. Cannot search any brand");
+//        } else {
+//            String sID = Inputter.inputString("Input brand id to search:");
+//            Brand br = this.search(sID);//search brand base on code
+//            if(br == null)
+//                System.out.println("Brand " + sID + " doesn't exist.");
+//            else
+//                System.out.println("Brsnd found: " + br);
+//        }
         brandID = brandID.trim().toUpperCase();
         int index = -1;
         int n = this.size();
         for (int i = 0; i < n; i++) {
-            if(this.get(i).getBrandID().compareToIgnoreCase(brandID) == 0){
+            if (this.get(i).getBrandID().compareToIgnoreCase(brandID) == 0) {
                 index = i;
             }
         }
         return index;
     }
-    }
 
     public Brand getUserChoice() {
         Menu mnu = new Menu();
-        return (Brand)mnu.ref_getChoice(this);
+        return (Brand) mnu.ref_getChoice(this);
 
     }
 
