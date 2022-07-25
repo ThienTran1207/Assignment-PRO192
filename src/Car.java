@@ -1,4 +1,6 @@
+
 public class Car {
+
     String carID;
     Brand brand;
     String color;
@@ -55,16 +57,22 @@ public class Car {
     public void setEngineID(String engineID) {
         this.engineID = engineID;
     }
-    
-    public int comparedTo(Car s1){
-        int result = 0;
-        return result;
-    }
 
+    public int comparedTo(Car c) {
+        int d = this.brand.brandName.compareTo(c.brand.brandName);
+        if (d != 0) {
+            return d;
+        }
+        return this.carID.compareTo(c.carID);
+    }
+    
+    public String ScreenString(){
+        return brand + "\n" + carID + ", " + color + ", " + frameID + ", " + engineID;
+    }
+    
     @Override
     public String toString() {
-        return this.carID +", " + this.brand + ", " + this.color + ", " + this.frameID +", " + this.engineID;
+        return this.carID + ", " + this.brand.brandID + ", " + this.color + ", " + this.frameID + ", " + this.engineID;
     }
-    
-    
+
 }
